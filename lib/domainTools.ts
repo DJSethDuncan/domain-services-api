@@ -26,7 +26,6 @@ export async function getServiceResponses(body: ValidatedBody): Promise<any> {
   }
 }
 
-//@TODO rename this
 async function serviceRequest(host: string, service: any) {
   try {
     let endpoint = '';
