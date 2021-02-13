@@ -26,7 +26,7 @@ export async function getServiceResponses(body: ValidatedBody): Promise<any> {
   }
 }
 
-async function serviceRequest(host: string, service: any) {
+export async function serviceRequest(host: string, service: any) {
   try {
     let endpoint = '';
 

@@ -5,7 +5,8 @@
   "scripts": {
     "tsc": "tsc",
     "start": "node dist/app/index",
-    "build": "npx prettier --write \"**/*.{js,ts}\" && tsc --build"
+    "build": "npx prettier --write \"**/*.{js,ts}\" && tsc --build",
+    "test": "mocha -r ts-node/register tests/**/*.test.ts --timeout 15000"
   },
   "author": "",
   "license": "ISC",
@@ -17,13 +18,17 @@
   },
   "devDependencies": {
     "@swimlane/prettier-config-swimlane": "^3.0.3",
+    "@types/chai": "^4.2.15",
     "@types/express": "^4.17.11",
+    "@types/mocha": "^8.2.0",
     "@types/node": "^14.14.25",
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
+    "chai": "^4.3.0",
     "eslint": "^7.19.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
+    "mocha": "^8.3.0",
     "prettier": "^2.2.1",
     "prettier-eslint": "^12.0.0",
     "ts-node": "^9.1.1",
