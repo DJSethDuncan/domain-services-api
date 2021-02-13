@@ -8,21 +8,13 @@ interface ValidatedBody {
 export async function getServiceResponses(body: ValidatedBody): Promise<any> {
   try {
     let promises: any[] = [];
-    let errs: any[] = [];
     let response = {
       domain: body.domain
     };
     body.services.map(service => {
-      try {
-        let getPromise: Promise<any> = testFunc(body.domain, service);
-        promises.push(getPromise);
-      } catch (mapErr) {
-        errs.push(mapErr);
-      }
+      let getPromise: Promise<any> = serviceRequest(body.domain, service);
+      promises.push(getPromise);
     });
-    if (errs.length > 0) {
-      throw new Error('MAP ERR');
-    }
     let promisesResponse = await Promise.all(promises);
     promisesResponse.forEach(promiseResponse => {
       let thisConfigData = JSON.parse(promiseResponse.config.data);
@@ -34,7 +26,8 @@ export async function getServiceResponses(body: ValidatedBody): Promise<any> {
   }
 }
 
-async function testFunc(host: string, service: any) {
+//@TODO rename this
+async function serviceRequest(host: string, service: any) {
   try {
     let endpoint = '';
 
@@ -58,7 +51,7 @@ async function testFunc(host: string, service: any) {
       url: process.env.SERVICES_API_URL + endpoint,
       data: {
         host: host,
-        service: service // put this here so I can parse the promises back out later after I get the array of promise results
+        service: service
       }
     });
     return Promise.resolve(serviceResponse);
