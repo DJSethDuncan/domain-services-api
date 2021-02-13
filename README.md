@@ -19,4 +19,4 @@ Will return data in this format:
 }
 ```
 
-NOTE: This relies on the [Domain Services Cluster](https://github.com/DJSethDuncan/domain-services-cluster) to be running somewhere.
+NOTE: This relies on the [Domain Services Cluster](https://github.com/DJSethDuncan/domain-services-cluster) to be running somewhere. Even for tests. 
