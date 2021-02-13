@@ -17,6 +17,10 @@ const domainPostSchema = Joi.object({
   )
 });
 
+app.get('/', function (req, res, next) {
+  res.send('hello world')
+});
+
 app.post('/domain', async function (req, res, next) {
   try {
     const validatedBody = await domainPostSchema.validateAsync(req.body);
