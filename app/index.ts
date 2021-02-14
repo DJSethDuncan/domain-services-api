@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // VALIDATION SCHEMA
 const domainPostSchema = Joi.object({
-  domain: Joi.alternatives().try(Joi.string().domain(), Joi.string().ip()),
+  domain: Joi.alternatives().try(Joi.string().domain(), Joi.string().ip()).required(),
   services: Joi.array().items(Joi.string().valid('geolocation', 'rdap', 'reversedns', 'ping')).default(['ping'])
 });
 
