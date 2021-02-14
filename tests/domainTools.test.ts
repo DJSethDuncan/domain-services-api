@@ -40,8 +40,6 @@ describe('getServiceResponses', function () {
   });
   it('Returns a JSON payload', async function () {
     const serviceResponses = await domainTools.getServiceResponses(domainTestQuery);
-    console.log('-------------------------------------------');
-    console.error(serviceResponses);
     expect(serviceResponses).to.be.an('object');
   });
   it('Works with an IP', async function () {

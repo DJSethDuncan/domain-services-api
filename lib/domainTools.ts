@@ -20,7 +20,6 @@ export async function getServiceResponses(query: ValidatedQuery): Promise<any> {
     promisesResponse.forEach(promiseResponse => {
       response[promiseResponse.config.params.service] = promiseResponse.data;
     });
-    console.log('response', response);
     return Promise.resolve(response);
   } catch (err) {
     return Promise.reject(err);
