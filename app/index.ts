@@ -5,18 +5,22 @@ import * as domainTools from '../lib/domainTools';
 import dotenv from 'dotenv';
 dotenv.config();
 
+// SET UP APP
 const app: express.Application = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// VALIDATION SCHEMA
 const domainPostSchema = Joi.object({
   domain: Joi.alternatives().try(Joi.string().domain(), Joi.string().ip()),
   services: Joi.array().items(Joi.string().valid('geolocation', 'rdap', 'reversedns', 'ping')).default(['ping'])
 });
 
+// TESTING ENDPOING
 app.get('/', function (req, res) {
   res.send('hello world');
 });
 
+// DATA ENDPOINT
 app.post('/domain', async function (req, res, next) {
   try {
     const validatedBody = await domainPostSchema.validateAsync(req.body);
