@@ -16,7 +16,7 @@
     ],
     "paths": {
         "/domain": {
-            "post": {
+            "get": {
                 "summary": "Get data about a given domain",
                 "description": "",
                 "consumes": [
@@ -27,13 +27,29 @@
                 ],
                 "parameters": [
                     {
-                        "in": "body",
-                        "name": "body",
+                        "name": "domain",
+                        "in": "query",
                         "description": "Request object with your parameters",
                         "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/domainRequest"
-                        }
+                        "type": "string"
+                    },
+                    {
+                        "name": "services",
+                        "in": "query",
+                        "description": "Services you'd like to run on this domain/ip",
+                        "required": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "geolocation",
+                                "rdap",
+                                "reversedns",
+                                "ping"
+                            ],
+                            "default": "ping"
+                        },
+                        "collectionFormat": "multi"
                     }
                 ],
                 "responses": {

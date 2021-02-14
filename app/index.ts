@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // VALIDATION SCHEMA
 const domainPostSchema = Joi.object({
   domain: Joi.alternatives().try(Joi.string().domain(), Joi.string().ip()).required(),
-  services: Joi.array().items(Joi.string().valid('geolocation', 'rdap', 'reversedns', 'ping')).default(['ping'])
+  services: Joi.array().items(Joi.string().valid('geolocation', 'rdap', 'reversedns', 'ping')).single().default('ping')
 });
 
 // TESTING ENDPOING
@@ -21,10 +21,11 @@ app.get('/', function (req, res) {
 });
 
 // DATA ENDPOINT
-app.post('/domain', async function (req, res, next) {
+app.get('/domain', async function (req, res, next) {
   try {
-    const validatedBody = await domainPostSchema.validateAsync(req.body);
-    const serviceResponses = await domainTools.getServiceResponses(validatedBody);
+    console.log(req.params);
+    const validatedParams = await domainPostSchema.validateAsync(req.query);
+    const serviceResponses = await domainTools.getServiceResponses(validatedParams);
     res.status(200).json(serviceResponses);
   } catch (err) {
     next(err);
