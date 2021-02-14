@@ -2,6 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import Joi from 'joi';
 import * as domainTools from '../lib/domainTools';
+import swaggerUi from 'swagger-ui-express';
+import * as swaggerSpec from '../swagger.json';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -31,6 +33,9 @@ app.get('/domain', async function (req, res, next) {
     next(err);
   }
 });
+
+// SET UP DOCS
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // RETURN ERRORS
 app.use(function (err, req, res, next) {
