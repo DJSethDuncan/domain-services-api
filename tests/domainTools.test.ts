@@ -23,15 +23,6 @@ const testQuerySingleService: TestQuery = {
   services: ['ping']
 };
 
-describe('.env', function () {
-  it('PORT exists', function () {
-    expect(process.env.PORT).to.not.be.empty;
-  });
-  it('SERVICES_API_URL exists', function () {
-    expect(process.env.SERVICES_API_URL).to.not.be.empty;
-  });
-});
-
 describe('getServiceResponses', function () {
   it('Returns a promise', function () {
     // no need to await here since we are just making sure it's a promise
