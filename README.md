@@ -5,7 +5,7 @@ An API to return data on domains.
 Accepts two parameters: 
 ```
 domain: String <domain or IP address>
-services: Array <geolocation, rdap, reversedns, ping>
+services: Array <geolocation, rdap, reversedns, ping> (Default: ping)
 ```
 
 Will return data in this format:
