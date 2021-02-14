@@ -1,5 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import Joi from 'joi';
 import * as domainTools from '../lib/domainTools';
 import swaggerUi from 'swagger-ui-express';
@@ -9,7 +8,6 @@ dotenv.config();
 
 // SET UP APP
 const app: express.Application = express();
-app.use(bodyParser.urlencoded({ extended: true }));
 
 // VALIDATION SCHEMA
 const domainPostSchema = Joi.object({
@@ -48,6 +46,5 @@ app.use(function (err, req, res, next) {
 
 // START LISTENING
 app.listen(process.env.PORT, function () {
-  // debugging
-  // console.log('Example app listening on port 3000!');
+  console.log('Listening on port ' + process.env.PORT);
 });
