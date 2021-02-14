@@ -20,7 +20,6 @@ app.get('/', function (req, res) {
 app.post('/domain', async function (req, res, next) {
   try {
     const validatedBody = await domainPostSchema.validateAsync(req.body);
-    console.log(validatedBody);
     const serviceResponses = await domainTools.getServiceResponses(validatedBody);
     res.status(200).json(serviceResponses);
   } catch (err) {
