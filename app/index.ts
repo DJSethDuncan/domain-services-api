@@ -1,5 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import Joi from 'joi';
 import * as domainTools from '../lib/domainTools';
 import swaggerUi from 'swagger-ui-express';
@@ -9,10 +8,9 @@ dotenv.config();
 
 // SET UP APP
 const app: express.Application = express();
-app.use(bodyParser.urlencoded({ extended: true }));
 
 // VALIDATION SCHEMA
-const domainPostSchema = Joi.object({
+const domainSchema = Joi.object({
   domain: Joi.alternatives().try(Joi.string().domain(), Joi.string().ip()).required(),
   services: Joi.array().items(Joi.string().valid('geolocation', 'rdap', 'reversedns', 'ping')).single().default('ping')
 });
@@ -25,9 +23,8 @@ app.get('/', function (req, res) {
 // DATA ENDPOINT
 app.get('/domain', async function (req, res, next) {
   try {
-    console.log(req.params);
-    const validatedParams = await domainPostSchema.validateAsync(req.query);
-    const serviceResponses = await domainTools.getServiceResponses(validatedParams);
+    const validatedQuery = await domainSchema.validateAsync(req.query);
+    const serviceResponses = await domainTools.getServiceResponses(validatedQuery);
     res.status(200).json(serviceResponses);
   } catch (err) {
     next(err);
@@ -48,6 +45,5 @@ app.use(function (err, req, res, next) {
 
 // START LISTENING
 app.listen(process.env.PORT, function () {
-  // debugging
-  // console.log('Example app listening on port 3000!');
+  console.log('Listening on port ' + process.env.PORT);
 });

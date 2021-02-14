@@ -2,14 +2,16 @@
   "name": "domain-checker",
   "version": "1.0.0",
   "description": "",
+  "author": "Seth Duncan",
+  "engines": {
+    "node": ">=12.2.0"
+  },
   "scripts": {
     "tsc": "tsc",
     "start": "node dist/app/index",
-    "build": "npx prettier --write \"**/*.{js,ts}\" && tsc --build",
+    "build": "npx prettier --write \"**/*.{js,ts}\" &&  tsc --build",
     "test": "mocha -r ts-node/register tests/**/*.test.ts --timeout 15000"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",

@@ -1,24 +1,24 @@
 import axios from 'axios';
 
-interface ValidatedBody {
+interface ValidatedQuery {
   domain: string;
   services: Array<string>;
 }
 
-export async function getServiceResponses(body: ValidatedBody): Promise<any> {
+export async function getServiceResponses(query: ValidatedQuery): Promise<any> {
   try {
     let promises: any[] = [];
-    let response = {
-      domain: body.domain
-    };
-    body.services.map(service => {
-      let getPromise: Promise<any> = serviceRequest(body.domain, service);
+    // let response = {
+    //   domain: query.domain
+    // };
+    let response: any = {};
+    query.services.map(service => {
+      let getPromise: Promise<any> = serviceRequest(query.domain, service);
       promises.push(getPromise);
     });
     let promisesResponse = await Promise.all(promises);
     promisesResponse.forEach(promiseResponse => {
-      let thisConfigData = JSON.parse(promiseResponse.config.data);
-      response[thisConfigData.service] = promiseResponse.data;
+      response[promiseResponse.config.params.service] = promiseResponse.data;
     });
     return Promise.resolve(response);
   } catch (err) {
@@ -46,9 +46,9 @@ export async function serviceRequest(host: string, service: any) {
     }
 
     let serviceResponse = await axios({
-      method: 'POST',
+      method: 'GET',
       url: process.env.SERVICES_API_URL + endpoint,
-      data: {
+      params: {
         host: host,
         service: service
       }
