@@ -10,7 +10,7 @@ dotenv.config();
 const app: express.Application = express();
 
 // VALIDATION SCHEMA
-const domainPostSchema = Joi.object({
+const domainSchema = Joi.object({
   domain: Joi.alternatives().try(Joi.string().domain(), Joi.string().ip()).required(),
   services: Joi.array().items(Joi.string().valid('geolocation', 'rdap', 'reversedns', 'ping')).single().default('ping')
 });
@@ -23,9 +23,8 @@ app.get('/', function (req, res) {
 // DATA ENDPOINT
 app.get('/domain', async function (req, res, next) {
   try {
-    console.log(req.params);
-    const validatedParams = await domainPostSchema.validateAsync(req.query);
-    const serviceResponses = await domainTools.getServiceResponses(validatedParams);
+    const validatedQuery = await domainSchema.validateAsync(req.query);
+    const serviceResponses = await domainTools.getServiceResponses(validatedQuery);
     res.status(200).json(serviceResponses);
   } catch (err) {
     next(err);

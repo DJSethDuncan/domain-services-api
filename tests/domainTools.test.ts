@@ -3,22 +3,22 @@ import * as domainTools from '../lib/domainTools';
 import dotenv from 'dotenv';
 dotenv.config({ path: './.env' });
 
-interface TestBody {
+interface TestQuery {
   domain: string;
   services: Array<string>;
 }
 
 const testIP = '127.0.0.1';
 const testDomain = 'www.google.com';
-const domainTestBody: TestBody = {
+const domainTestQuery: TestQuery = {
   domain: testDomain,
   services: ['geolocation', 'rdap', 'ping', 'reversedns']
 };
-const ipTestBody: TestBody = {
+const ipTestQuery: TestQuery = {
   domain: testIP,
   services: ['geolocation', 'rdap', 'ping', 'reversedns']
 };
-const testBodySingleService: TestBody = {
+const testQuerySingleService: TestQuery = {
   domain: testDomain,
   services: ['ping']
 };
@@ -35,23 +35,25 @@ describe('.env', function () {
 describe('getServiceResponses', function () {
   it('Returns a promise', function () {
     // no need to await here since we are just making sure it's a promise
-    const promiseResponse = domainTools.getServiceResponses(domainTestBody);
+    const promiseResponse = domainTools.getServiceResponses(domainTestQuery);
     expect(promiseResponse).to.be.a('promise');
   });
   it('Returns a JSON payload', async function () {
-    const serviceResponses = await domainTools.getServiceResponses(domainTestBody);
+    const serviceResponses = await domainTools.getServiceResponses(domainTestQuery);
+    console.log('-------------------------------------------');
+    console.error(serviceResponses);
     expect(serviceResponses).to.be.an('object');
   });
   it('Works with an IP', async function () {
-    const serviceResponses = await domainTools.getServiceResponses(ipTestBody);
+    const serviceResponses = await domainTools.getServiceResponses(ipTestQuery);
     expect(serviceResponses).to.be.an('object');
   });
   it('Works with a domain', async function () {
-    const serviceResponses = await domainTools.getServiceResponses(domainTestBody);
+    const serviceResponses = await domainTools.getServiceResponses(domainTestQuery);
     expect(serviceResponses).to.be.an('object');
   });
   it('Works with only one service', async function () {
-    const serviceResponses = await domainTools.getServiceResponses(testBodySingleService);
+    const serviceResponses = await domainTools.getServiceResponses(testQuerySingleService);
     expect(serviceResponses).to.be.an('object');
   });
 });
