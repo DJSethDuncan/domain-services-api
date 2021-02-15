@@ -12,7 +12,7 @@ const app: express.Application = express();
 // VALIDATION SCHEMA
 const domainSchema = Joi.object({
   domain: Joi.alternatives().try(Joi.string().domain(), Joi.string().ip()).required(),
-  services: Joi.array().items(Joi.string().valid('geolocation', 'rdap', 'reversedns', 'ping')).single().default('ping')
+  services: Joi.array().items(Joi.string().valid('geolocation', 'rdap', 'reversedns', 'ping')).single()
 });
 
 // TESTING ENDPOING
@@ -36,10 +36,12 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // RETURN ERRORS
 app.use(function (err, req, res, next) {
+  console.log('global errorhandler');
   const errResponse = {
-    error: err.stack
+    error: err.stack,
+    data: err.response.data
   };
-  console.error(err);
+  console.log(errResponse);
   res.status(500).json(errResponse);
 });
 

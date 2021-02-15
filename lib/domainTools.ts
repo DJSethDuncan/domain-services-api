@@ -8,11 +8,9 @@ interface ValidatedQuery {
 export async function getServiceResponses(query: ValidatedQuery): Promise<any> {
   try {
     let promises: any[] = [];
-    // let response = {
-    //   domain: query.domain
-    // };
     let response: any = {};
-    query.services.map(service => {
+    let services = query.services ? query.services : ['ping'];
+    services.map(service => {
       let getPromise: Promise<any> = serviceRequest(query.domain, service);
       promises.push(getPromise);
     });
