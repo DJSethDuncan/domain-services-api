@@ -11,7 +11,6 @@ services: Array <geolocation, rdap, reversedns, ping> (Default: ping)
 Will return data in this format:
 ```
 {
-    "domain": <domain>,
     "geolocation": {...},
     "rdap": {...},
     "reversedns": [<domain>],
