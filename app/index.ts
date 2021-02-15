@@ -12,7 +12,7 @@ const app: express.Application = express();
 // VALIDATION SCHEMA
 const domainSchema = Joi.object({
   domain: Joi.alternatives().try(Joi.string().domain(), Joi.string().ip()).required(),
-  services: Joi.array().items(Joi.string().valid('geolocation', 'rdap', 'reversedns', 'ping')).single().default('ping')
+  services: Joi.array().items(Joi.string().valid('geolocation', 'rdap', 'reversedns', 'ping')).single()
 });
 
 // TESTING ENDPOING
