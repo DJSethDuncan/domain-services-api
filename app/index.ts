@@ -36,10 +36,12 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // RETURN ERRORS
 app.use(function (err, req, res, next) {
+  console.log('global errorhandler');
   const errResponse = {
-    error: err.stack
+    error: err.stack,
+    data: err.response.data
   };
-  console.error(err);
+  console.log(errResponse);
   res.status(500).json(errResponse);
 });
 
